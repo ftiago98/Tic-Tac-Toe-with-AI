@@ -6,13 +6,21 @@ import java.util.Arrays;
 public class Grid {
 
     ArrayList<ArrayList<Character>> tictactoeGrid = new ArrayList<>(3);
-    ArrayList<ArrayList<Integer>> winningFields = new ArrayList<>();
+    ArrayList<ArrayList<Integer>> winningFields = new ArrayList<>(
+            Arrays.asList(new ArrayList<Integer>(Arrays.asList(0,1,2)),
+                    new ArrayList<Integer>(Arrays.asList(3,4,5)),
+                    new ArrayList<Integer>(Arrays.asList(6,7,8)),
+                    new ArrayList<Integer>(Arrays.asList(0,3,6)),
+                    new ArrayList<Integer>(Arrays.asList(1,4,7)),
+                    new ArrayList<Integer>(Arrays.asList(2,5,8)),
+                    new ArrayList<Integer>(Arrays.asList(0,4,8)),
+                    new ArrayList<Integer>(Arrays.asList(2,4,6)))
+    );
 
     Player playerX;
     Player playerY;
 
     public Grid(String start, Player playerY, Player playerX){
-
         this.playerY = playerY;
         this.playerX = playerX;
 
@@ -20,20 +28,6 @@ public class Grid {
         for (int i = 0; i < 3; i++) {
             tictactoeGrid.add(new ArrayList());
         }
-
-        ArrayList topRow = (ArrayList) Arrays.asList(0, 1, 2);
-        ArrayList middleRow = (ArrayList) Arrays.asList(3, 4, 5);
-        ArrayList bottomRow = (ArrayList) Arrays.asList(6, 7, 8);
-        ArrayList leftColumn = (ArrayList) Arrays.asList(0, 3, 6);
-        ArrayList middleColumn = (ArrayList) Arrays.asList(1, 4, 7);
-        ArrayList rightColumn = (ArrayList) Arrays.asList(2, 5, 8);
-
-        winningFields.add(topRow);
-        winningFields.add(middleRow);
-        winningFields.add(bottomRow);
-        winningFields.add(leftColumn);
-        winningFields.add(middleColumn);
-        winningFields.add(rightColumn);
 
         int counter = 0;
         for (int i = 0; i < tictactoeGrid.size(); i++) {
@@ -50,6 +44,7 @@ public class Grid {
                 counter++;
             }
         }
+
     }
 
     public void printGrid(){
@@ -90,11 +85,4 @@ public class Grid {
 
         return false;
     }
-
-    //ArrayList grid
-    //printGrid
-    //placeLetter
-    //checkForWinner
-
-
 }
