@@ -55,10 +55,10 @@ public class Grid {
     public void printGrid(){
         System.out.println("---------");
 
-        for (int i = 0; i < tictactoeGrid.size(); i++) {
+        for (ArrayList<Character> characters : tictactoeGrid) {
             System.out.print("| ");
-            for (int j = 0; j < tictactoeGrid.get(i).size(); j++) {
-                System.out.print(tictactoeGrid.get(i).get(j) + " ");
+            for (int j = 0; j < characters.size(); j++) {
+                System.out.print(characters.get(j) + " ");
             }
             System.out.println("|");
         }
@@ -69,18 +69,17 @@ public class Grid {
     public boolean place(int y, int x, Player player) {
 
         try {
-
+            if (tictactoeGrid.get(y).get(x).equals(' ')) {
+                tictactoeGrid.get(y).remove(x);
+                tictactoeGrid.get(y).add(x, player.letter);
+                player.setField(y, x);
+            } else {
+                System.out.println("This cell is occupied! Choose another one!");
+            }
         } catch (Exception e) {
             System.out.println("Coordinates should be from 1 to 3!");
         }
 
-        if (tictactoeGrid.get(y).get(x).equals(' ')) {
-            tictactoeGrid.get(y).remove(x);
-            tictactoeGrid.get(y).add(x, player.letter);
-            player.setField(y, x);
-        } else {
-            System.out.println("This cell is occupied! Choose another one!");
-        }
         return false;
     }
 
