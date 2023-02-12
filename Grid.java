@@ -79,9 +79,16 @@ public class Grid {
         return false;
     }
 
-    public boolean checkForWinner(){
+    public boolean checkForWinner(Player player){
 
-
+        for (ArrayList<Integer> element:
+             winningFields) {
+            if (player.ownFields.containsAll(element)) {
+                System.out.println("YOU WOOON");
+            } else {
+                System.out.println("YOU DID NOT WIN");
+            }
+        }
 
         return false;
     }
