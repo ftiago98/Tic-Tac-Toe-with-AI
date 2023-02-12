@@ -5,17 +5,8 @@ import java.util.Arrays;
 
 public class Grid {
 
-    ArrayList<ArrayList<Character>> tictactoeGrid = new ArrayList<>(3);
-    ArrayList<ArrayList<Integer>> winningFields = new ArrayList<>(
-            Arrays.asList(new ArrayList<Integer>(Arrays.asList(0,1,2)),
-                    new ArrayList<Integer>(Arrays.asList(3,4,5)),
-                    new ArrayList<Integer>(Arrays.asList(6,7,8)),
-                    new ArrayList<Integer>(Arrays.asList(0,3,6)),
-                    new ArrayList<Integer>(Arrays.asList(1,4,7)),
-                    new ArrayList<Integer>(Arrays.asList(2,5,8)),
-                    new ArrayList<Integer>(Arrays.asList(0,4,8)),
-                    new ArrayList<Integer>(Arrays.asList(2,4,6)))
-    );
+    ArrayList<ArrayList<Character>> tictactoeGrid;
+    ArrayList<ArrayList<Integer>> winningFields;
 
     Player playerX;
     Player playerY;
@@ -26,8 +17,22 @@ public class Grid {
 
         // two dimensional ArrayList {[],[],[]}
         for (int i = 0; i < 3; i++) {
-            tictactoeGrid.add(new ArrayList());
+            tictactoeGrid = new ArrayList<>(
+                    Arrays.asList(new ArrayList<>(),
+                            new ArrayList<>(),
+                            new ArrayList<>())
+            );
         }
+
+        winningFields = new ArrayList<>(
+                Arrays.asList(new ArrayList<>(Arrays.asList(0,1,2)),
+                        new ArrayList<>(Arrays.asList(3,4,5)),
+                        new ArrayList<>(Arrays.asList(6,7,8)),
+                        new ArrayList<>(Arrays.asList(0,3,6)),
+                        new ArrayList<>(Arrays.asList(1,4,7)),
+                        new ArrayList<>(Arrays.asList(2,5,8)),
+                        new ArrayList<>(Arrays.asList(0,4,8)),
+                        new ArrayList<>(Arrays.asList(2,4,6))));
 
         int counter = 0;
         for (int i = 0; i < tictactoeGrid.size(); i++) {
