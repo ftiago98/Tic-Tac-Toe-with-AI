@@ -43,13 +43,13 @@ public class Main {
                     if (isUserPlaying) {
                         array = grid.getCoordinates();
                     } else {
-                        array = playerX.getRandomField();
+                        array = ((AIPlayer) playerX).getRandomField();
                     }
 
                 grid.place(array[0], array[1], playerX);
             } else {
                 playerChosen = playerO;
-                int[] array = playerO.getRandomField();
+                int[] array = (((AIPlayer) playerO).getRandomField());
                 grid.place(array[0], array[1], playerO);
             }
             grid.printGrid();

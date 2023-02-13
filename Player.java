@@ -15,9 +15,4 @@ public class Player {
         ownFields.add((y*3) + x);
     }
 
-    public int[] getRandomField(){
-
-        return new int[]{0,0};
-    }
-
 }
