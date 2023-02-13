@@ -8,7 +8,7 @@ public class Grid {
 
     Scanner scanner = new Scanner(System.in);
     Player playerX;
-    Player playerAI;
+    Player playerO;
 
     ArrayList<ArrayList<Character>> tictactoeGrid = new ArrayList<>(
             Arrays.asList(new ArrayList<>(3),
@@ -26,7 +26,7 @@ public class Grid {
             new ArrayList<>(Arrays.asList(2,4,6))));
 
     public Grid(Player playerAI, Player playerX){
-        this.playerAI = playerAI;
+        this.playerO = playerAI;
         this.playerX = playerX;
 
         for (int i = 0; i < tictactoeGrid.size(); i++) {
@@ -100,7 +100,6 @@ public class Grid {
             System.out.println("Draw");
             isGameFinished = true;
         }
-
         return isGameFinished;
     }
 }
