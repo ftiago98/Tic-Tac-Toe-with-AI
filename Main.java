@@ -6,33 +6,32 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        boolean isInputValid = true;
-        boolean isUserPlaying = true;
 
         Player playerO = null;
         Player playerX = null;
+        Player playerChosen;
+
+        boolean isInputValid = true;
+        boolean isUserPlaying = true;
+        boolean isGameFinished;
 
         do {
             System.out.println("Input command:");
             String input = scanner.nextLine();
 
-            if (input.equals("start easy easy")){
+            if (input.equals("start easy easy")){ // AI vs AI
                 playerO = new AIPlayer('O');
                 playerX = new AIPlayer('X');
                 isUserPlaying = false;
-            } else if (input.equals("start easy user")) {
+            } else if (input.equals("start easy user")) { //Player vs AI
                 playerO = new AIPlayer('O');
                 playerX = new Player('X');
             } else {
-                System.out.println("Bad parameters!");
+                System.out.println("Bad parameters!"); //false input
                 scanner.nextLine();
                 isInputValid = false;
             }
-
         } while (!isInputValid);
-
-        Player playerChosen;
-        boolean isGameFinished;
 
         Grid grid = new Grid(playerO, playerX);
         grid.printGrid();
