@@ -5,34 +5,29 @@ import java.util.Arrays;
 
 public class Grid {
 
-    ArrayList<ArrayList<Character>> tictactoeGrid;
-    ArrayList<ArrayList<Integer>> winningFields;
+    ArrayList<ArrayList<Character>> tictactoeGrid = new ArrayList<>(
+            Arrays.asList(new ArrayList<>(3),
+                    new ArrayList<>(3),
+                    new ArrayList<>(3))
+    );
+    ArrayList<ArrayList<Integer>> winningFields = new ArrayList<>(
+            Arrays.asList(new ArrayList<>(Arrays.asList(0,1,2)),
+            new ArrayList<>(Arrays.asList(3,4,5)),
+            new ArrayList<>(Arrays.asList(6,7,8)),
+            new ArrayList<>(Arrays.asList(0,3,6)),
+            new ArrayList<>(Arrays.asList(1,4,7)),
+            new ArrayList<>(Arrays.asList(2,5,8)),
+            new ArrayList<>(Arrays.asList(0,4,8)),
+            new ArrayList<>(Arrays.asList(2,4,6))));
 
     Player playerX;
-    Player playerY;
+    Player playerAI;
 
-    public Grid(String start, Player playerY, Player playerX){
-        this.playerY = playerY;
+    int roundCounter = 0;
+
+    public Grid(String start, Player playerAI, Player playerX){
+        this.playerAI = playerAI;
         this.playerX = playerX;
-
-        // two dimensional ArrayList {[],[],[]}
-        for (int i = 0; i < 3; i++) {
-            tictactoeGrid = new ArrayList<>(
-                    Arrays.asList(new ArrayList<>(),
-                            new ArrayList<>(),
-                            new ArrayList<>())
-            );
-        }
-
-        winningFields = new ArrayList<>(
-                Arrays.asList(new ArrayList<>(Arrays.asList(0,1,2)),
-                        new ArrayList<>(Arrays.asList(3,4,5)),
-                        new ArrayList<>(Arrays.asList(6,7,8)),
-                        new ArrayList<>(Arrays.asList(0,3,6)),
-                        new ArrayList<>(Arrays.asList(1,4,7)),
-                        new ArrayList<>(Arrays.asList(2,5,8)),
-                        new ArrayList<>(Arrays.asList(0,4,8)),
-                        new ArrayList<>(Arrays.asList(2,4,6))));
 
         int counter = 0;
         for (int i = 0; i < tictactoeGrid.size(); i++) {
@@ -44,7 +39,7 @@ public class Grid {
                     playerX.setField(i, j);
                 } else {
                     tictactoeGrid.get(i).add('O');
-                    playerY.setField(i, j);
+                    playerAI.setField(i, j);
                 }
                 counter++;
             }
@@ -57,8 +52,8 @@ public class Grid {
 
         for (ArrayList<Character> characters : tictactoeGrid) {
             System.out.print("| ");
-            for (int j = 0; j < characters.size(); j++) {
-                System.out.print(characters.get(j) + " ");
+            for (Character character : characters) {
+                System.out.print(character + " ");
             }
             System.out.println("|");
         }
@@ -68,11 +63,16 @@ public class Grid {
 
     public boolean place(int y, int x, Player player) {
 
+        boolean isValid = false;
+        y--;
+        x--;
+
         try {
             if (tictactoeGrid.get(y).get(x).equals(' ')) {
                 tictactoeGrid.get(y).remove(x);
                 tictactoeGrid.get(y).add(x, player.letter);
                 player.setField(y, x);
+                isValid = true;
             } else {
                 System.out.println("This cell is occupied! Choose another one!");
             }
@@ -80,20 +80,29 @@ public class Grid {
             System.out.println("Coordinates should be from 1 to 3!");
         }
 
-        return false;
+        return isValid;
     }
 
     public boolean checkForWinner(Player player){
 
+        boolean isGameFinished = false;
+        roundCounter++;
+
         for (ArrayList<Integer> element:
              winningFields) {
             if (player.ownFields.containsAll(element)) {
-                System.out.println("YOU WOOON");
-            } else {
-                System.out.println("YOU DID NOT WIN");
+                System.out.printf("%c wins", player.letter);
+                isGameFinished = true;
             }
         }
 
-        return false;
+        if (roundCounter == 9) {
+            System.out.println("Draw");
+            isGameFinished = true;
+        } else if (!isGameFinished) {
+            System.out.println("Game not finished");
+        }
+
+        return isGameFinished;
     }
 }
