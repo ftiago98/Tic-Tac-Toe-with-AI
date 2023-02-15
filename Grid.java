@@ -8,11 +8,18 @@ public class Grid {
     Player playerX;
     Player playerO;
 
+    /* tictactoeGrid
+    |       |
+    |       |
+    |       |
+     */
     ArrayList<ArrayList<Character>> tictactoeGrid = new ArrayList<>(
             Arrays.asList(new ArrayList<>(3),
                     new ArrayList<>(3),
                     new ArrayList<>(3))
     );
+
+    //All possible combinations to win
     ArrayList<ArrayList<Integer>> winningFields = new ArrayList<>(
             Arrays.asList(new ArrayList<>(Arrays.asList(0,1,2)),
             new ArrayList<>(Arrays.asList(3,4,5)),
@@ -48,11 +55,9 @@ public class Grid {
 
     public boolean isFieldEmpty (int y, int x){
         boolean isFieldEmpty = false;
-        y--; //Array start by Index 0 not 1
-        x--; //Array start by Index 0 not 1
 
         try {
-            if (tictactoeGrid.get(y).get(x).equals(' ')) {
+            if (tictactoeGrid.get(--y).get(--x).equals(' ')) {
                 isFieldEmpty = true;
             }
         } catch (Exception e) {
@@ -62,9 +67,7 @@ public class Grid {
     }
 
     public void place(int y, int x, Player player) {
-        y--; //Array start by Index 0 not 1
-        x--; //Array start by Index 0 not 1
-        tictactoeGrid.get(y).remove(x);
+        tictactoeGrid.get(--y).remove(--x);
         tictactoeGrid.get(y).add(x, player.letter);
         player.setField(y, x);
     }
@@ -73,18 +76,20 @@ public class Grid {
 
         boolean isGameFinished = false;
 
-        for (ArrayList<Integer> element:
-             winningFields) {
-            if (player.ownFields.containsAll(element)) {
-                System.out.printf("%c wins", player.letter);
-                isGameFinished = true;
+        //Check for winner when playerX sets third field
+        if (playerX.ownFields.size() > 2) {
+            for (ArrayList<Integer> element:
+                    winningFields) {
+                if (player.ownFields.containsAll(element)) {
+                    isGameFinished = true;
+                    System.out.printf("%c wins", player.letter);
+                }
             }
-        }
-
-        if (playerX.ownFields.size() == 5 && !isGameFinished) {  //TicTacToe can't have more than 5 X
+        } else if (playerX.ownFields.size() == 5) {
             System.out.println("Draw");
             isGameFinished = true;
         }
+
         return isGameFinished;
     }
 }

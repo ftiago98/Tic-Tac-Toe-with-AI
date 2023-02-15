@@ -13,9 +13,8 @@ public class Main {
 
         boolean isInputValid;
         boolean isGameFinished;
-        boolean isPlayerXAI = false;
-        boolean isPlayerOAI = false;
 
+        //game menu
         do {
             isInputValid = true;
             System.out.println("Input command:");
@@ -25,18 +24,14 @@ public class Main {
                 case "start easy easy":  // AI vs AI
                     playerX = new AIPlayer('X');
                     playerO = new AIPlayer('O');
-                    isPlayerXAI = true;
-                    isPlayerOAI = true;
                     break;
-                case "start easy user":  //Player vs AI
+                case "start easy user":  //Player vs AI (Player = X)
                     playerX = new AIPlayer('X');
                     playerO = new Player('O');
-                    isPlayerXAI = true;
                     break;
-                case "start user easy":
+                case "start user easy": //Player vs AI (Player = O)
                     playerX = new Player('X');
                     playerO = new AIPlayer('O');
-                    isPlayerOAI = true;
                     break;
                 case "start user user":  //User vs User
                     playerX = new Player('X');
@@ -51,36 +46,31 @@ public class Main {
             }
         } while (!isInputValid);
 
-        Grid grid = new Grid(playerO, playerX);
+        Grid grid = new Grid(playerO, playerX); //Initialize Grid with both Players
         grid.printGrid();
 
         do {
+            //find which player's turn it is
             if (playerO.ownFields.size() >= playerX.ownFields.size()) {
                 playerChosen = playerX;
-                int[] array = playerX.getCoordinates();
-                if (grid.isFieldEmpty(array[0], array[1])) {
-                    if (isPlayerXAI){
-                        System.out.println("Making move level \"easy\"");
-                    }
-                    grid.place(array[0], array[1], playerX);
-                    grid.printGrid();
-                } else if (!isPlayerXAI){
-                    System.out.println("This cell is occupied! Choose another one!");
-                    grid.printGrid();
-                }
             } else {
                 playerChosen = playerO;
-                int[] array = playerO.getCoordinates();
-                if (grid.isFieldEmpty(array[0], array[1])) {
-                    if (isPlayerOAI) {
-                        System.out.println("Making move level \"easy\"");
-                    }
-                    grid.place(array[0], array[1], playerO);
-                    grid.printGrid();
-                } else if (!isPlayerOAI){
-                    System.out.println("This cell is occupied! Choose another one!");
-                    grid.printGrid();
+            }
+
+            //get coordinates
+            int[] coordinates = {};
+            coordinates = playerChosen.getCoordinates();
+
+            //check if coordinates are empty
+            if (grid.isFieldEmpty(coordinates[0], coordinates[1])){
+                if(playerChosen.getClass().getName().equals("tictactoe.AIPlayer")) { //Print only if Object = AIPlayer
+                    System.out.println("Making move level \"easy\"");
                 }
+                grid.place(coordinates[0], coordinates[1], playerChosen);
+                grid.printGrid();
+            } else if (!playerChosen.getClass().getName().equals("tictactoe.AIPlayer")){
+                System.out.println("This cell is occupied! Choose another one!");
+                grid.printGrid();
             }
             isGameFinished = grid.checkForWinner(playerChosen);
         } while (!isGameFinished);
