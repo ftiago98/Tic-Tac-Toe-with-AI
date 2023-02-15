@@ -8,7 +8,7 @@ public class AIPlayer extends Player{
         super(letter);
     }
 
-    public int[] getRandomField(){
+    public int[] getCoordinates(){
         Random random = new Random();
         System.out.println("Making move level \"easy\"");
 

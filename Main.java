@@ -7,7 +7,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        Player playerO = null;
+        Player playerO = new AIPlayer('O');
         Player playerX = null;
         Player playerChosen;
 
@@ -20,11 +20,8 @@ public class Main {
             String input = scanner.nextLine();
 
             if (input.equals("start easy easy")){ // AI vs AI
-                playerO = new AIPlayer('O');
                 playerX = new AIPlayer('X');
-                isUserPlaying = false;
             } else if (input.equals("start easy user")) { //Player vs AI
-                playerO = new AIPlayer('O');
                 playerX = new Player('X');
             } else {
                 System.out.println("Bad parameters!"); //false input
@@ -39,17 +36,11 @@ public class Main {
         do {
             if (playerO.ownFields.size() >= playerX.ownFields.size()) {
                 playerChosen = playerX;
-                int[] array;
-                    if (isUserPlaying) {
-                        array = grid.getCoordinates();
-                    } else {
-                        array = ((AIPlayer) playerX).getRandomField();
-                    }
-
+                int[] array = playerX.getCoordinates();
                 grid.place(array[0], array[1], playerX);
             } else {
                 playerChosen = playerO;
-                int[] array = (((AIPlayer) playerO).getRandomField());
+                int[] array = playerO.getCoordinates();
                 grid.place(array[0], array[1], playerO);
             }
             grid.printGrid();

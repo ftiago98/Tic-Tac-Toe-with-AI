@@ -2,11 +2,9 @@ package tictactoe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Grid {
 
-    Scanner scanner = new Scanner(System.in);
     Player playerX;
     Player playerO;
 
@@ -25,8 +23,8 @@ public class Grid {
             new ArrayList<>(Arrays.asList(0,4,8)),
             new ArrayList<>(Arrays.asList(2,4,6))));
 
-    public Grid(Player playerAI, Player playerX){
-        this.playerO = playerAI;
+    public Grid(Player playerO, Player playerX){
+        this.playerO = playerO;
         this.playerX = playerX;
 
         for (int i = 0; i < tictactoeGrid.size(); i++) {
@@ -46,26 +44,6 @@ public class Grid {
             System.out.println("|");
         }
         System.out.println("---------");
-    }
-
-    public int[] getCoordinates () {
-        boolean isInputValid;
-        int xCoordinate = 0;
-        int yCoordinate = 0;
-        do {
-            System.out.println("Enter the coordinates:");
-            try {
-                yCoordinate = scanner.nextInt();
-                xCoordinate = scanner.nextInt();
-                isInputValid = true;
-            } catch (Exception e) {
-                System.out.println("You should enter numbers!");
-                scanner.nextLine(); //discard invalid token from console. If not it will throw infinity loop with exceptions.
-                isInputValid = false;
-            }
-        } while (!isInputValid);
-
-        return new int[]{yCoordinate, xCoordinate};
     }
 
     public void place(int y, int x, Player player) {
@@ -96,7 +74,7 @@ public class Grid {
             }
         }
 
-        if (playerX.ownFields.size() == 5) {  //TicTacToe can't have more than 5 X
+        if (playerX.ownFields.size() == 5 && !isGameFinished) {  //TicTacToe can't have more than 5 X
             System.out.println("Draw");
             isGameFinished = true;
         }
