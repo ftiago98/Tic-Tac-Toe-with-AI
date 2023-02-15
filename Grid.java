@@ -46,20 +46,27 @@ public class Grid {
         System.out.println("---------");
     }
 
-    public void place(int y, int x, Player player) {
+    public boolean isFieldEmpty (int y, int x){
+        boolean isFieldEmpty = false;
         y--; //Array start by Index 0 not 1
         x--; //Array start by Index 0 not 1
+
         try {
             if (tictactoeGrid.get(y).get(x).equals(' ')) {
-                tictactoeGrid.get(y).remove(x);
-                tictactoeGrid.get(y).add(x, player.letter);
-                player.setField(y, x);
-            } else {
-                System.out.println("This cell is occupied! Choose another one!");
+                isFieldEmpty = true;
             }
         } catch (Exception e) {
             System.out.println("Coordinates should be from 1 to 3!");
         }
+        return isFieldEmpty;
+    }
+
+    public void place(int y, int x, Player player) {
+        y--; //Array start by Index 0 not 1
+        x--; //Array start by Index 0 not 1
+        tictactoeGrid.get(y).remove(x);
+        tictactoeGrid.get(y).add(x, player.letter);
+        player.setField(y, x);
     }
 
     public boolean checkForWinner(Player player){
