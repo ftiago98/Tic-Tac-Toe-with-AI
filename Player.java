@@ -1,6 +1,7 @@
 package tictactoe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Player {
@@ -8,6 +9,17 @@ public class Player {
     Scanner scanner = new Scanner(System.in);
     ArrayList<Integer> ownFields = new ArrayList<>();
     char letter;
+
+    //All possible combinations to win
+    ArrayList<ArrayList<Integer>> rowsToWin = new ArrayList<>(
+            Arrays.asList(new ArrayList<>(Arrays.asList(0,1,2)),
+                    new ArrayList<>(Arrays.asList(3,4,5)),
+                    new ArrayList<>(Arrays.asList(6,7,8)),
+                    new ArrayList<>(Arrays.asList(0,3,6)),
+                    new ArrayList<>(Arrays.asList(1,4,7)),
+                    new ArrayList<>(Arrays.asList(2,5,8)),
+                    new ArrayList<>(Arrays.asList(0,4,8)),
+                    new ArrayList<>(Arrays.asList(2,4,6))));
 
     public Player(char letter){
         this.letter = letter;
@@ -37,4 +49,22 @@ public class Player {
         return new int[]{yCoordinate, xCoordinate};
     }
 
+    public boolean checkForWinner(){
+
+        boolean isGameFinished = false;
+        //Check for winner when playerX sets third field
+        if (this.ownFields.size() > 2) {
+            for (ArrayList<Integer> row:
+                    rowsToWin) {
+                if (this.ownFields.containsAll(row)) {
+                    isGameFinished = true;
+                    System.out.printf("%c wins", this.letter);
+                }
+            }
+        } else if (this.letter == 'X' && this.ownFields.size() == 5 || this.letter == 'O' && this.ownFields.size() == 4) {
+            System.out.println(GameStates.DRAW);
+            isGameFinished = true;
+        }
+        return isGameFinished;
+    }
 }

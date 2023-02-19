@@ -19,17 +19,6 @@ public class Grid {
                     new ArrayList<>(3))
     );
 
-    //All possible combinations to win
-    ArrayList<ArrayList<Integer>> winningFields = new ArrayList<>(
-            Arrays.asList(new ArrayList<>(Arrays.asList(0,1,2)),
-            new ArrayList<>(Arrays.asList(3,4,5)),
-            new ArrayList<>(Arrays.asList(6,7,8)),
-            new ArrayList<>(Arrays.asList(0,3,6)),
-            new ArrayList<>(Arrays.asList(1,4,7)),
-            new ArrayList<>(Arrays.asList(2,5,8)),
-            new ArrayList<>(Arrays.asList(0,4,8)),
-            new ArrayList<>(Arrays.asList(2,4,6))));
-
     public Grid(Player playerO, Player playerX){
         this.playerO = playerO;
         this.playerX = playerX;
@@ -72,24 +61,5 @@ public class Grid {
         player.setField(y, x);
     }
 
-    public boolean checkForWinner(Player player){
 
-        boolean isGameFinished = false;
-
-        //Check for winner when playerX sets third field
-        if (playerX.ownFields.size() > 2) {
-            for (ArrayList<Integer> element:
-                    winningFields) {
-                if (player.ownFields.containsAll(element)) {
-                    isGameFinished = true;
-                    System.out.printf("%c wins", player.letter);
-                }
-            }
-        } else if (playerX.ownFields.size() == 5) {
-            System.out.println("Draw");
-            isGameFinished = true;
-        }
-
-        return isGameFinished;
-    }
 }
