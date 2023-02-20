@@ -14,44 +14,6 @@ public class Main {
         boolean isInputValid;
         boolean isGameFinished;
 
-        playerX = new Player('X');
-        playerO = new AIPlayerMedium('O');
-        ((AIPlayerMedium) playerO).setEnemyPlayer(playerX);
-
-
-        Grid grid = new Grid(playerO, playerX); //Initialize Grid with both Players
-        grid.printGrid();
-        int counter= 0;
-
-        do {
-            //find which player's turn it is
-            if (playerO.ownFields.size() >= playerX.ownFields.size()) {
-                playerChosen = playerX;
-            } else {
-                playerChosen = playerO;
-            }
-
-            //get coordinates
-            int[] coordinates;
-            coordinates = playerChosen.getCoordinates();
-
-            //check if coordinates are empty
-            if (grid.isFieldEmpty(coordinates[0], coordinates[1])){
-                if(playerChosen.getClass().getName().equals("tictactoe.AIPlayerEasy")) { //Print only if Object = AIPlayer
-                    System.out.println("Making move level \"easy\"");
-                }
-                grid.place(coordinates[0], coordinates[1], playerChosen);
-                grid.printGrid();
-            } else if (!playerChosen.getClass().getName().equals("tictactoe.AIPlayerEasy") || !playerChosen.getClass().getName().equals("tictactoe.AIPlayerMedium")){
-                System.out.println("This cell is occupied! Choose another one!");
-                grid.printGrid();
-            }
-            isGameFinished = playerChosen.checkForWinner();
-        } while (!isGameFinished);
-    }
-
-
-/*
         //game menu
         do {
             isInputValid = true;
@@ -74,6 +36,22 @@ public class Main {
                 case "start user user":  //User vs User
                     playerX = new Player('X');
                     playerO = new Player('O');
+                    break;
+                case "start medium user":  //User vs User
+                    playerX = new AIPlayerMedium('X');
+                    playerO = new Player('O');
+                    ((AIPlayerMedium) playerX).setEnemyPlayer(playerO);
+                    break;
+                case "start user medium":  //User vs User
+                    playerX = new Player('X');
+                    playerO = new AIPlayerMedium('O');
+                    ((AIPlayerMedium) playerO).setEnemyPlayer(playerX);
+                    break;
+                case "start medium medium":  //User vs User
+                    playerX = new AIPlayerMedium('X');
+                    playerO = new AIPlayerMedium('O');
+                    ((AIPlayerMedium) playerX).setEnemyPlayer(playerO);
+                    ((AIPlayerMedium) playerO).setEnemyPlayer(playerX);
                     break;
                 case "exit":  //Exit
                     System.exit(0);
@@ -101,18 +79,19 @@ public class Main {
 
             //check if coordinates are empty
             if (grid.isFieldEmpty(coordinates[0], coordinates[1])){
-                if(playerChosen.getClass().getName().equals("tictactoe.AIPlayer")) { //Print only if Object = AIPlayer
+                if(playerChosen.getClass().getName().equals("tictactoe.AIPlayerEasy")) { //Print only if Object = AIPlayer
                     System.out.println("Making move level \"easy\"");
+                }
+                if(playerChosen.getClass().getName().equals("tictactoe.AIPlayerMedium")) { //Print only if Object = AIPlayer
+                    System.out.println("Making move level \"medium\"");
                 }
                 grid.place(coordinates[0], coordinates[1], playerChosen);
                 grid.printGrid();
-            } else if (!playerChosen.getClass().getName().equals("tictactoe.AIPlayer")){
+            } else if (!playerChosen.getClass().getName().equals("tictactoe.AIPlayerEasy") && !playerChosen.getClass().getName().equals("tictactoe.AIPlayerMedium")){
                 System.out.println("This cell is occupied! Choose another one!");
                 grid.printGrid();
             }
             isGameFinished = playerChosen.checkForWinner();
         } while (!isGameFinished);
     }
-
- */
 }
