@@ -1,5 +1,6 @@
 package tictactoe;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -53,15 +54,13 @@ public class Player {
 
         boolean isGameFinished = false;
         //Check for winner when playerX sets third field
-        if (this.ownFields.size() > 2) {
-            for (ArrayList<Integer> row:
-                    rowsToWin) {
-                if (this.ownFields.containsAll(row)) {
-                    isGameFinished = true;
-                    System.out.printf("%c wins", this.letter);
-                }
+        for (ArrayList<Integer> row:rowsToWin) {
+            if (this.ownFields.containsAll(row)) {
+                isGameFinished = true;
+                System.out.printf("%c wins", this.letter);
             }
-        } else if (this.letter == 'X' && this.ownFields.size() == 5 || this.letter == 'O' && this.ownFields.size() == 4) {
+        }
+        if (this.letter == 'X' && this.ownFields.size() == 5 && !isGameFinished) {
             System.out.println(GameStates.DRAW);
             isGameFinished = true;
         }

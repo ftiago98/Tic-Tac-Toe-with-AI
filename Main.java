@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         Player playerO = null;
@@ -20,6 +21,7 @@ public class Main {
 
         Grid grid = new Grid(playerO, playerX); //Initialize Grid with both Players
         grid.printGrid();
+        int counter= 0;
 
         do {
             //find which player's turn it is
@@ -35,18 +37,19 @@ public class Main {
 
             //check if coordinates are empty
             if (grid.isFieldEmpty(coordinates[0], coordinates[1])){
-                if(playerChosen.getClass().getName().equals("tictactoe.AIPlayer")) { //Print only if Object = AIPlayer
+                if(playerChosen.getClass().getName().equals("tictactoe.AIPlayerEasy")) { //Print only if Object = AIPlayer
                     System.out.println("Making move level \"easy\"");
                 }
                 grid.place(coordinates[0], coordinates[1], playerChosen);
                 grid.printGrid();
-            } else if (!playerChosen.getClass().getName().equals("tictactoe.AIPlayerEasy") || !playerChosen.getClass().getName().equals("tictactoe.AIPlayerMedium") ){
+            } else if (!playerChosen.getClass().getName().equals("tictactoe.AIPlayerEasy") || !playerChosen.getClass().getName().equals("tictactoe.AIPlayerMedium")){
                 System.out.println("This cell is occupied! Choose another one!");
                 grid.printGrid();
             }
             isGameFinished = playerChosen.checkForWinner();
         } while (!isGameFinished);
     }
+
 
 /*
         //game menu
